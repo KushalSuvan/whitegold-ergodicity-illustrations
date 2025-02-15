@@ -12,12 +12,13 @@
       alert("In God, We Trust")
       const width = 800, height = 400;
 
-      const svg = d3.select("div")
+      const svg = d3.select("body")
           .append("svg")
           .attr("width", width)
           .attr("height", height)
           .style("background", "#fafafa");
       
+      // Generate Brownian motion data separately
       function generateBrownianMotion(n) {
           let data = [{ time: 0, value: 0 }];
           for (let i = 1; i < n; i++) {
@@ -40,6 +41,22 @@
           .domain(d3.extent(data, d => d.value))
           .range([height - 50, 50]);
       
+      const gradient = svg.append("defs")
+          .append("linearGradient")
+          .attr("id", "line-gradient")
+          .attr("x1", "0%")
+          .attr("x2", "100%")
+          .attr("y1", "0%")
+          .attr("y2", "0%");
+      
+      gradient.append("stop")
+          .attr("offset", "80%")
+          .attr("stop-color", "gray");
+      
+      gradient.append("stop")
+          .attr("offset", "100%")
+          .attr("stop-color", "green");
+      
       const line = d3.line()
           .x(d => xScale(d.time))
           .y(d => yScale(d.value))
@@ -48,17 +65,10 @@
       svg.append("path")
           .datum(data)
           .attr("fill", "none")
-          .attr("stroke", "black")
+          .attr("stroke", "url(#line-gradient)")
           .attr("stroke-width", 2)
           .attr("d", line);
       
-      // Highlight the last point
-      const lastPoint = data[data.length - 1];
-      svg.append("circle")
-          .attr("cx", xScale(lastPoint.time))
-          .attr("cy", yScale(lastPoint.value))
-          .attr("r", 5)
-          .attr("fill", "green");      
     </script>
   </body>
 </html>
