@@ -50,17 +50,25 @@
       
       gradient.append("stop")
           .attr("offset", "60%")
-          .attr("stop-color", "white")
-          .attr("stop-opacity", "0.5");
+          .attr("stop-color", "gray")
+          .attr("stop-opacity", "0.3");
       
       gradient.append("stop")
           .attr("offset", "80%")
           .attr("stop-color", "gray")
           .attr("stop-opacity", "0.8");
+
+      gradient.append("stop")
+          .attr("offset", "90%")
+          .attr("stop-color", "#FFD700");
+
+      gradient.append("stop")
+          .attr("offset", "95%")
+          .attr("stop-color", "#FFC200");
       
       gradient.append("stop")
           .attr("offset", "100%")
-          .attr("stop-color", "green");
+          .attr("stop-color", "#E6B800");
       
       const line = d3.line()
           .x(d => xScale(d.time))
