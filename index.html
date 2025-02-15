@@ -107,7 +107,7 @@
               const blandStop = d3.select('#line-gradient').selectAll('stop').filter((d, i, nodes) => nodes[i].getAttribute('offset') === `${percentage}%`);
               blandStop.attr('stop-color', "gray").attr('stop-opacity', '0.3');
 
-              setTimeout(() => {unstep(percentage + 5)}, 30)
+              setTimeout(() => {unstep(percentage + 5)}, 300)
           }
           step();
       }
