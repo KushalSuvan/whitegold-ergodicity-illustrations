@@ -97,6 +97,8 @@
                       .attr("d", line);
                   index++;
                   setTimeout(step, 30);
+              } else {
+                unstep(90)
               }
           }
           function unstep(const percentage) {
@@ -109,7 +111,6 @@
               setTimeout(30, () => {unstep(percentage + 5)}
           }
           step();
-          unstep(90);
       }
       
       animateLine();
