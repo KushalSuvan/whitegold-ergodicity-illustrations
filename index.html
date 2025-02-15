@@ -60,7 +60,8 @@
 
       gradient.append("stop")
           .attr("offset", "90%")
-          .attr("stop-color", "#FFD700");
+          .attr("stop-color", "#FFD700")
+          .attr("stop-opacity", "0.5");
 
       gradient.append("stop")
           .attr("offset", "95%")
@@ -68,7 +69,7 @@
       
       gradient.append("stop")
           .attr("offset", "100%")
-          .attr("stop-color", "#E6B800");
+          .attr("stop-color", "#FFC200");
       
       const line = d3.line()
           .x(d => xScale(d.time))
@@ -98,20 +99,17 @@
                   setTimeout(step, 30);
               }
           }
-          // function unstep() {
-          //     if (index > -1) {
-          //         currentData.push(data[index]);
-          //         if (currentData.length > 500) {
-          //             currentData.shift(); // Keep a trail with fading effect
-          //         }
-          //         path.datum(currentData)
-          //             .attr("d", line);
-          //         index++;
-          //         setTimeout(step, 30);
-          //     }
-          // }
+          function unstep(const percentage) {
+              if (percentage == 100) return;
+              gradient.append("stop")
+                .attr("offset", `${precentage}%`)
+                .attr("stop-color", "gray")
+                .attr("stop-opacity", "0.3");
+
+              setTimeout(30, () => {unstep(percentage + 5)}
+          }
           step();
-          // unstep();
+          unstep(90);
       }
       
       animateLine();
