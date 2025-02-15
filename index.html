@@ -112,6 +112,24 @@
                         path
                           .style("opacity", 1)
                           .datum(data);
+
+                        d3.select('#line-gradient')
+                          .selectAll('stop')
+                          .filter((d, i, nodes) => nodes[i].getAttribute('offset') === `90%`)
+                          .attr('stop-color', "#FFC200")
+                          .attr('stop-opacity', 0.5)
+
+                        d3.select('#line-gradient')
+                          .selectAll('stop')
+                          .filter((d, i, nodes) => nodes[i].getAttribute('offset') === `95%`)
+                          .attr('stop-color', "#FFD700")
+                          .attr('stop-opacity', 1)
+
+                        d3.select('#line-gradient')
+                          .selectAll('stop')
+                          .filter((d, i, nodes) => nodes[i].getAttribute('offset') === `100%`)
+                          .attr('stop-color', "#FFD700")
+                          .attr('stop-opacity', 1)
                         animateLine();
                     });
                 return;
