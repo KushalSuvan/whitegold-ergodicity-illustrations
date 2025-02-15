@@ -30,7 +30,7 @@
       }
       
       const n = 200;
-      const data = generateBrownianMotion(n);
+      let data = generateBrownianMotion(n);
       
       const xScale = d3.scaleLinear()
           .domain([0, n - 1])
@@ -105,11 +105,13 @@
           function unstep(percentage) {
               if (percentage > 100) {
                 path.transition()
-                    .duration(2000)
+                    .duration(1500)
                     .style("opacity", 0)
                     .on("end", () => {
                         data = generateBrownianMotion(n);
-                        path.style("opacity", 1);
+                        path
+                          .style("opacity", 1)
+                          .datum(data);
                         animateLine();
                     });
                 return;
