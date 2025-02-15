@@ -103,7 +103,16 @@
               }
           }
           function unstep(percentage) {
-              if (percentage > 100) return;
+              if (percentage > 100) {
+                path.transition()
+                    .duration(2000)
+                    .style("opacity", 0)
+                    .on("end", () => {
+                        data = generateBrownianMotion(n);
+                        path.style("opacity", 1);
+                        animateLine();
+                    });
+              }
 
               const blandStop = d3.select('#line-gradient').selectAll('stop').filter((d, i, nodes) => nodes[i].getAttribute('offset') === `${percentage}%`);
               blandStop.attr('stop-color', "gray").attr('stop-opacity', '0.3');
