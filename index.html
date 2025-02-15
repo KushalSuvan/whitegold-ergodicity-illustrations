@@ -8,7 +8,7 @@
 
     <script defer>
       alert("here we go")
-      chart = {
+      
       const width = 928;
       const height = 500;
       const marginTop = 20;
@@ -97,8 +97,8 @@
           .attr("stroke-linecap", "round")
           .attr("d", line);
     
-      return Object.assign(svg.node(), {scales: {color}});
-      }
+      const chart = Object.assign(svg.node(), {scales: {color}});
+      
     </script>
   </body>
 </html>
