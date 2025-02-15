@@ -102,7 +102,7 @@
               }
           }
           function unstep(percentage) {
-              if (percentage >= 100) return;
+              if (percentage > 100) return;
 
               const blandStop = d3.select('#line-gradient').selectAll('stop').filter((d, i, nodes) => nodes[i].getAttribute('offset') === `${percentage}%`);
               blandStop.attr('stop-color', "gray").attr('stop-opacity', '0.3');
