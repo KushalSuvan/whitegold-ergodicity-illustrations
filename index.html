@@ -61,12 +61,30 @@
           .y(d => yScale(d.value))
           .curve(d3.curveBasis);
       
-      svg.append("path")
-          .datum(data)
+      const path = svg.append("path")
+          .datum([])
           .attr("fill", "none")
           .attr("stroke", "url(#line-gradient)")
           .attr("stroke-width", 2)
           .attr("d", line);
+      
+      function animateLine() {
+          let currentData = [];
+          let index = 0;
+          
+          function step() {
+              if (index < data.length) {
+                  currentData.push(data[index]);
+                  path.datum(currentData)
+                      .attr("d", line);
+                  index++;
+                  setTimeout(step, 30);
+              }
+          }
+          step();
+      }
+      
+      animateLine();
       
     </script>
   </body>
