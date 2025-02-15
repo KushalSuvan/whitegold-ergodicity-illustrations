@@ -9,7 +9,7 @@
 
     
     <script type="module">
-      alert("here we go")
+      alert("In God, We Trust")
       const width = 800, height = 400;
 
       const svg = d3.select("div")
@@ -18,12 +18,19 @@
           .attr("height", height)
           .style("background", "#fafafa");
       
-      // Generate Brownian motion
+      function generateBrownianMotion(n) {
+          let data = [{ time: 0, value: 0 }];
+          for (let i = 1; i < n; i++) {
+              data.push({
+                  time: i,
+                  value: data[i - 1].value + (Math.random() - 0.5) * 10
+              });
+          }
+          return data;
+      }
+      
       const n = 200;
-      const data = Array.from({ length: n }, (_, i) => ({
-          time: i,
-          value: (i === 0 ? 0 : data[i - 1].value + (Math.random() - 0.5) * 10)
-      }));
+      const data = generateBrownianMotion(n);
       
       const xScale = d3.scaleLinear()
           .domain([0, n - 1])
