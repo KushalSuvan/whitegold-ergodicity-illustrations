@@ -112,6 +112,7 @@
                         path.style("opacity", 1);
                         animateLine();
                     });
+                return;
               }
 
               const blandStop = d3.select('#line-gradient').selectAll('stop').filter((d, i, nodes) => nodes[i].getAttribute('offset') === `${percentage}%`);
