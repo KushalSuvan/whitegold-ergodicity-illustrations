@@ -2,6 +2,11 @@
 <html>
   <head>
     <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <style>
+      body {
+        background-color: transparent;
+      }
+    </style>
   </head>
   <body>
     <div></div>
@@ -15,7 +20,7 @@
           .append("svg")
           .attr("width", width)
           .attr("height", height)
-          .style("background", "#fefefe");
+          .style("background", "#fefefe00");
       
       // Generate Brownian motion data separately
       function generateBrownianMotion(n) {
