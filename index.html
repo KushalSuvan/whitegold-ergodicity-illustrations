@@ -102,9 +102,9 @@
               }
           }
           function unstep(percentage) {
-              if (percentage == 100) return;
+              if (percentage >= 100) return;
               gradient.append("stop")
-                .attr("offset", `${precentage}%`)
+                .attr("offset", `${percentage}%`)
                 .attr("stop-color", "gray")
                 .attr("stop-opacity", "0.3");
 
