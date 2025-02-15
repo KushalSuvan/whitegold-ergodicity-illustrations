@@ -60,16 +60,16 @@
 
       gradient.append("stop")
           .attr("offset", "90%")
-          .attr("stop-color", "#FFD700")
+          .attr("stop-color", "#FFC200")
           .attr("stop-opacity", "0.5");
 
       gradient.append("stop")
           .attr("offset", "95%")
-          .attr("stop-color", "#FFC200");
+          .attr("stop-color", "#FFD700");
       
       gradient.append("stop")
           .attr("offset", "100%")
-          .attr("stop-color", "#FFC200");
+          .attr("stop-color", "#FFD700");
       
       const line = d3.line()
           .x(d => xScale(d.time))
@@ -107,7 +107,7 @@
               const blandStop = d3.select('#line-gradient').selectAll('stop').filter((d, i, nodes) => nodes[i].getAttribute('offset') === `${percentage}%`);
               blandStop.attr('stop-color', "gray").attr('stop-opacity', '0.3');
 
-              setTimeout(() => {unstep(percentage + 5)}, 300)
+              setTimeout(() => {unstep(percentage + 5)}, 150)
           }
           step();
       }
