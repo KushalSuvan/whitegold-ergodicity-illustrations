@@ -82,11 +82,6 @@
           .attr("stroke", "url(#line-gradient)")
           .attr("stroke-width", 2)
           .attr("d", line);
-
-      const glow = svg.append("circle")
-          .attr("r", 0)
-          .attr("fill", "green")
-          .attr("opacity", 0);
       
       function animateLine() {
           let currentData = [];
@@ -101,18 +96,6 @@
                   path.datum(currentData)
                       .attr("d", line);
 
-                  let lastPoint = data[index];
-                  glow
-                      .attr("cx", xScale(lastPoint.time))
-                      .attr("cy", yScale(lastPoint.value))
-                      .transition()
-                      .duration(300)
-                      .attr("r", 8)
-                      .attr("opacity", 0.8)
-                      .transition()
-                      .duration(300)
-                      .attr("r", 0)
-                      .attr("opacity", 0);
                   index++;
                   setTimeout(step, 30);
               } else {
