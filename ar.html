@@ -27,8 +27,8 @@
           .style("background", "#fefefe00");
       
       // Generate Brownian motion data separately
-      function generateAR1Process(n, phi = 0.8, sigma = 1) {
-          let data = [{ time: 0, value: 0 }];
+      function generateAR1Process(n, phi = 0.8, sigma = 1, mu=0) {
+          let data = [{ time: 0, value: mu }];
           for (let i = 1; i < n; i++) {
               let noise = d3.randomNormal(0, sigma)();
               let newValue = phi * data[i - 1].value + noise;
@@ -38,7 +38,7 @@
       }
       
       const n = 200;
-      let data = generateAR1Process(n);
+      let data = generateAR1Process(n, mu=2);
       
       const xScale = d3.scaleLinear()
           .domain([0, n - 1])
@@ -115,7 +115,7 @@
         .attr("y1", yPosition)
         .attr("y2", yPosition)
         .style("stroke", "gray")
-        .style("stroke-width", 1.5)
+        .style("stroke-width", 2)
         .style("stroke-dasharray", "4,4")  // Creates the dotted effect
         .style("opacity", 0.7);  // Subtle appearance
 
@@ -169,7 +169,7 @@
                     .duration(1500)
                     .style("opacity", 0)
                     .on("end", () => {
-                        data = generateAR1Process(n);
+                        data = generateAR1Process(n, mu=2);
                         path
                           .style("opacity", 1)
                           .datum(data);
