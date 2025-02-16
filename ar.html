@@ -90,6 +90,24 @@
           .attr("stroke", "url(#line-gradient)")
           .attr("stroke-width", 2)
           .attr("d", line);
+
+      // y - AXIS
+      const yAxis = d3.axisLeft(yScale);
+
+      svg.append("g")
+          .attr("class", "y-axis")
+          .attr("transform", "translate(50,0)")
+          .call(yAxis)
+          .selectAll("text")  // Style tick labels
+          .style("font-size", "12px")
+          .style("fill", "#333");
+      
+      svg.selectAll(".y-axis path, .y-axis line")  // Style axis lines
+          .style("stroke", "gray")
+          .style("stroke-width", "1");
+
+
+      // Animation
       
       function animateLine() {
           let currentData = [];
@@ -104,6 +122,19 @@
                   path.datum(currentData)
                       .attr("d", line);
 
+              // Animate y-Axis
+              svg.select(".y-axis")
+                  .transition()
+                  .duration(500)
+                  .call(d3.axisLeft(yScale))
+                  .selectAll("text")
+                  .style("font-size", "12px")
+                  .style("fill", "#333");
+              
+              svg.selectAll(".y-axis path, .y-axis line")
+                  .style("stroke", "gray")
+                  .style("stroke-width", "1");
+                
                   index++;
                   setTimeout(step, 15);
               } else {
