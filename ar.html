@@ -31,7 +31,7 @@
           let data = [{ time: 0, value: 0 }];
           for (let i = 1; i < n; i++) {
               let noise = d3.randomNormal(mu, sigma)();
-              let newValue = phi * data[i - 1].value - noise;
+              let newValue = phi * data[i - 1].value + noise;
               data.push({ time: i, value: newValue });
           }
           return data;
