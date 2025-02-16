@@ -38,7 +38,7 @@
       }
       
       const n = 200;
-      let data = generateAR1Process(n, mu=2);
+      let data = generateAR1Process(n, undefined, undefined, mu=2);
       
       const xScale = d3.scaleLinear()
           .domain([0, n - 1])
@@ -169,7 +169,7 @@
                     .duration(1500)
                     .style("opacity", 0)
                     .on("end", () => {
-                        data = generateAR1Process(n, mu=2);
+                        data = generateAR1Process(n, undefined, undefined, mu=2);
                         path
                           .style("opacity", 1)
                           .datum(data);
