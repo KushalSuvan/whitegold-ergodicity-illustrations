@@ -92,19 +92,19 @@
           .attr("d", line);
 
       // // y - AXIS
-      // const yAxis = d3.axisLeft(yScale);
+      const yAxis = d3.axisLeft(yScale);
 
-      // svg.append("g")
-      //     .attr("class", "y-axis")
-      //     .attr("transform", "translate(50,0)")
-      //     .call(yAxis)
-      //     .selectAll("text")  // Style tick labels
-      //     .style("font-size", "12px")
-      //     .style("fill", "#333");
+      svg.append("g")
+          .attr("class", "y-axis")
+          .attr("transform", "translate(50,0)")
+          .call(yAxis)
+          .selectAll("text")  // Style tick labels
+          .style("font-size", "12px")
+          .style("fill", "#333");
       
-      // svg.selectAll(".y-axis path, .y-axis line")  // Style axis lines
-      //     .style("stroke", "gray")
-      //     .style("stroke-width", "1");
+      svg.selectAll(".y-axis path, .y-axis line")  // Style axis lines
+          .style("stroke", "gray")
+          .style("stroke-width", "1");
 
       const yPosition = yScale(2);
 
