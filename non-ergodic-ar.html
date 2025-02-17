@@ -98,7 +98,15 @@
           .attr("d", line);
 
       // // y - AXIS
-      const yAxis = d3.axisLeft(yScale);
+      const customTick = [100, 2, -100];
+      const yAxis = d3.axisLeft(yScale)
+          .tickValues(customTicks)  // Use only the defined tick values
+          .tickFormat(d => `${d}`); // Format as plain numbers (customize if needed)
+
+      svg.selectAll(".y-axis text")
+          .style("font-size", "14px")
+          .style("fill", "#333")
+          .style("font-weight", "bold");
 
       svg.append("g")
           .attr("class", "y-axis")
