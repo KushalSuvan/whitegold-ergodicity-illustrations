@@ -105,7 +105,8 @@
 
       svg.selectAll(".y-axis text")
           .style("font-size", "14px")
-          .style("fill", "#333")
+          .style("fill", "gray")
+          .style("opacity", 0.5)
           .style("font-weight", "bold");
 
       svg.append("g")
@@ -114,11 +115,13 @@
           .call(yAxis)
           .selectAll("text")  // Style tick labels
           .style("font-size", "12px")
-          .style("fill", "#333");
+          .style("fill", "gray")
+          .style("opacity", 0.5)
       
       svg.selectAll(".y-axis path, .y-axis line")  // Style axis lines
           .style("stroke", "gray")
-          .style("stroke-width", "1");
+          .style("opacity", 0.5)
+          .style("stroke-width", "2");
 
       const yPosition = yScale(2);
 
