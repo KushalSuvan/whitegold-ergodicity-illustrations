@@ -1,0 +1,216 @@
+
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <style>
+      body {
+        background-color: transparent;
+      }
+
+      * {
+        background-color: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+
+    
+    <script type="module">
+      alert("In God, We Trust")
+      const width = window.innerWidth, height = 200;
+
+      const svg = d3.select("body")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .style("background", "#fefefe00");
+
+      function bernoulli(p) {
+        return Math.random() < p ? 1 : -1;
+      }
+      
+      // Generate Brownian motion data separately
+      function generateAR1Process(n, phi = 0.8, sigma = 1, mu=0) {
+          const up = bernoulli(0.51);
+          mu *= up;
+          let data = [{ time: 0, value: 0 }];
+          for (let i = 1; i < n; i++) {
+              let noise = d3.randomNormal(0, sigma)();
+              let newValue = phi * data[i - 1].value + noise + mu * (1-phi);
+              data.push({ time: i, value: newValue });
+          }
+          return data;
+      }
+      
+      const n = 200;
+      let data = generateAR1Process(n, undefined, undefined, 2);
+      
+      const xScale = d3.scaleLinear()
+          .domain([0, n - 1])
+          .range([50, width - 50]);
+      
+      const yScale = d3.scaleLinear()
+          .domain(d3.extent(data, d => d.value))
+          .range([height - 50, 50]);
+      
+      const gradient = svg.append("defs")
+          .append("linearGradient")
+          .attr("id", "line-gradient")
+          .attr("x1", "0%")
+          .attr("x2", "100%")
+          .attr("y1", "0%")
+          .attr("y2", "0%");
+      
+      gradient.append("stop")
+          .attr("offset", "60%")
+          .attr("stop-color", "gray")
+          .attr("stop-opacity", "0.3");
+      
+      gradient.append("stop")
+          .attr("offset", "80%")
+          .attr("stop-color", "gray")
+          .attr("stop-opacity", "0.3");
+
+      gradient.append("stop")
+          .attr("offset", "90%")
+          .attr("stop-color", "#FFC200")
+          .attr("stop-opacity", "0.5");
+
+      gradient.append("stop")
+          .attr("offset", "95%")
+          .attr("stop-color", "#FFD700");
+      
+      gradient.append("stop")
+          .attr("offset", "100%")
+          .attr("stop-color", "#FFD700");
+      
+      const line = d3.line()
+          .x(d => xScale(d.time))
+          .y(d => yScale(d.value))
+          .curve(d3.curveBasis);
+      
+      const path = svg.append("path")
+          .datum([])
+          .attr("fill", "none")
+          .attr("stroke", "url(#line-gradient)")
+          .attr("stroke-width", 2)
+          .attr("d", line);
+
+      // // y - AXIS
+      const yAxis = d3.axisLeft(yScale);
+
+      svg.append("g")
+          .attr("class", "y-axis")
+          .attr("transform", "translate(50,0)")
+          .call(yAxis)
+          .selectAll("text")  // Style tick labels
+          .style("font-size", "12px")
+          .style("fill", "#333");
+      
+      svg.selectAll(".y-axis path, .y-axis line")  // Style axis lines
+          .style("stroke", "gray")
+          .style("stroke-width", "1");
+
+      const yPosition = yScale(2);
+
+      svg.append("line")
+        .attr("class", "dotted-line")
+        .attr("x1", 50)  // Start from left padding
+        .attr("x2", width - 50)  // Extend to the right
+        .attr("y1", yPosition)
+        .attr("y2", yPosition)
+        .style("stroke", "gray")
+        .style("stroke-width", 2)
+        .style("stroke-dasharray", "4,4")  // Creates the dotted effect
+        .style("opacity", 0.7);  // Subtle appearance
+
+
+
+      // Animation
+      
+      function animateLine() {
+          let currentData = [];
+          let index = 0;
+          
+          function step() {
+              if (index < data.length) {
+                  currentData.push(data[index]);
+                  if (currentData.length > 500) {
+                      currentData.shift(); // Keep a trail with fading effect
+                  }
+                  path.datum(currentData)
+                      .attr("d", line);
+
+              // // Animate y-Axis
+              // svg.select(".y-axis")
+              //     .transition()
+              //     .duration(500)
+              //     .call(d3.axisLeft(yScale))
+              //     .selectAll("text")
+              //     .style("font-size", "12px")
+              //     .style("fill", "#333");
+              
+              // svg.selectAll(".y-axis path, .y-axis line")
+              //     .style("stroke", "gray")
+              //     .style("stroke-width", "1");
+
+                // Animate horizontal mean line
+                svg.select(".dotted-line")
+                  .transition()
+                  .duration(500)
+                  .attr("y1", yScale(2))
+                  .attr("y2", yScale(2));
+
+                // Update index for next iteration
+                  index++;
+                  setTimeout(step, 15);
+              } else {
+                unstep(90);
+              }
+          }
+          function unstep(percentage) {
+              if (percentage > 100) {
+                path.transition()
+                    .duration(1500)
+                    .style("opacity", 0)
+                    .on("end", () => {
+                        data = generateAR1Process(n, undefined, undefined, 2);
+                        path
+                          .style("opacity", 1)
+                          .datum(data);
+
+                        d3.select('#line-gradient')
+                          .selectAll('stop')
+                          .filter((d, i, nodes) => nodes[i].getAttribute('offset') === `90%`)
+                          .attr('stop-color', "#FFC200")
+                          .attr('stop-opacity', 0.5)
+
+                        d3.select('#line-gradient')
+                          .selectAll('stop')
+                          .filter((d, i, nodes) => nodes[i].getAttribute('offset') === `95%`)
+                          .attr('stop-color', "#FFD700")
+                          .attr('stop-opacity', 1)
+
+                        d3.select('#line-gradient')
+                          .selectAll('stop')
+                          .filter((d, i, nodes) => nodes[i].getAttribute('offset') === `100%`)
+                          .attr('stop-color', "#FFD700")
+                          .attr('stop-opacity', 1)
+                        animateLine();
+                    });
+                return;
+              }
+
+              const blandStop = d3.select('#line-gradient').selectAll('stop').filter((d, i, nodes) => nodes[i].getAttribute('offset') === `${percentage}%`);
+              blandStop.attr('stop-color', "gray").attr('stop-opacity', '0.3');
+
+              setTimeout(() => {unstep(percentage + 5)}, 150)
+          }
+          step();
+      }
+      
+      animateLine();
+    </script>
+  </body>
+</html>
