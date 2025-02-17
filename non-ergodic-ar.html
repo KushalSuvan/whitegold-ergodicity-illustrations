@@ -51,7 +51,7 @@
           .range([50, width - 50]);
       
       const yScale = d3.scaleLinear()
-          .domain(d3.extent(data, d => d.value))
+          .domain(d3.extent([-120, 120]))
           .range([height - 50, 50]);
       
       const gradient = svg.append("defs")
