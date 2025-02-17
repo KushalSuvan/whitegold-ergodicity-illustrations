@@ -98,7 +98,7 @@
           .attr("d", line);
 
       // // y - AXIS
-      const customTick = [100, 2, -100];
+      const customTicks = [100, 2, -100];
       const yAxis = d3.axisLeft(yScale)
           .tickValues(customTicks)  // Use only the defined tick values
           .tickFormat(d => `${d}`); // Format as plain numbers (customize if needed)
